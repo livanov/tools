@@ -14,6 +14,13 @@ then
     source <(helm completion bash)
 fi
 
+if command -v podman > /dev/null ;
+then
+    alias mvn='podman run --rm --volume "$(pwd)":/usr/src/project --volume "$HOME/.m2":/root/.m2 --workdir /usr/src/project maven:3-jdk-8 mvn'
+else if command -v docker > /dev/null ;
+    alias mvn='docker run --rm --volume "$(pwd)":/usr/src/project --volume "$HOME/.m2":/root/.m2 --workdir /usr/src/project maven:3-jdk-8 mvn'
+fi
+
 if command -v git > /dev/null ;
 then
     if command -v vim > /dev/null ;
