@@ -2,24 +2,6 @@
 
 stash-download-all-repos-from-project() {
 
-  if ! command -v curl > /dev/null ;
-  then
-      echo 'curl not installed'
-      return 1
-  fi
-
-  if ! command -v jq > /dev/null ;
-  then
-      echo 'jq not installed'
-      return 1
-  fi
-
-  if ! command -v git > /dev/null ;
-  then
-      echo 'git not installed'
-      return 1
-  fi
-
   if test -z "$1" ; then
       echo 'Please provide as FIRST parameter the Stash URL (e.g. https://stash.contoso.com)' ;
       return 1 ;
@@ -46,6 +28,6 @@ stash-download-all-repos-from-project() {
           -H "Cookie: ${COOKIE}" | \
       jq '.values[].links.clone[] | select (.name | contains("ssh")) | .href ' -r \
   ) ; do 
-      git clone ${SSH_URL} &
+      git clone ${SSH_URL};
   done
 }
